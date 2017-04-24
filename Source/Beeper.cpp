@@ -7,8 +7,8 @@
 
 #include "../Headers/Beeper.hpp"
 
-Beeper::Beeper(Aquila::FrequencyType sampleFreq)
-	: sampleFrequency(sampleFreq),
+Beeper::Beeper()
+	: sampleFrequency(SAMPLE_FREQ),
 	  sinGen(sampleFrequency)
 {
 	sinGen.setAmplitude(AMPLITUDE);

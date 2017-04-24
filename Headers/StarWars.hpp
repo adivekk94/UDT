@@ -32,7 +32,7 @@
 
 static void playStarWars()
 {
-	Beeper beeper(SAMPLE_FREQ);
+	Beeper beeper;
 
 	beeper.beep(a, 500);
 	beeper.beep(a, 500);

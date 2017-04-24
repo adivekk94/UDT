@@ -5,18 +5,30 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
 ../Source/Beeper.cpp \
-../Source/main.cpp \
-../Source/tessst.cpp 
+../Source/DataProcessor.cpp \
+../Source/DataReceiver.cpp \
+../Source/DataSender.cpp \
+../Source/Recorder.cpp \
+../Source/System.cpp \
+../Source/main.cpp 
 
 OBJS += \
 ./Source/Beeper.o \
-./Source/main.o \
-./Source/tessst.o 
+./Source/DataProcessor.o \
+./Source/DataReceiver.o \
+./Source/DataSender.o \
+./Source/Recorder.o \
+./Source/System.o \
+./Source/main.o 
 
 CPP_DEPS += \
 ./Source/Beeper.d \
-./Source/main.d \
-./Source/tessst.d 
+./Source/DataProcessor.d \
+./Source/DataReceiver.d \
+./Source/DataSender.d \
+./Source/Recorder.d \
+./Source/System.d \
+./Source/main.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

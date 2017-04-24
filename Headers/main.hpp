@@ -8,11 +8,10 @@
 #ifndef HEADERS_MAIN_HPP_
 #define HEADERS_MAIN_HPP_
 
-#include <iostream>
-#include <SFML/Audio.hpp>
+#include "../Headers/System.hpp"
 #include "Beeper.hpp"
 #include "StarWars.hpp"
 
-using namespace std;
+static System mainSystem;
 
 #endif /* HEADERS_MAIN_HPP_ */
