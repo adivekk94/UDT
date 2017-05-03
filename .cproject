@@ -24,7 +24,7 @@
 								<option id="gnu.cpp.compiler.exe.debug.option.optimization.level.1566882280" name="Optimization Level" superClass="gnu.cpp.compiler.exe.debug.option.optimization.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.exe.debug.option.debugging.level.1682648011" name="Debug Level" superClass="gnu.cpp.compiler.exe.debug.option.debugging.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.1956164784" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
-									<listOptionValue builtIn="false" value="/home/Libs/include/aquila"/>
+									<listOptionValue builtIn="false" value="/home/adivek/Licencjat/aquila-src/aquila"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.dialect.std.1533291973" name="Language standard" superClass="gnu.cpp.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.cpp.compiler.dialect.c++11" valueType="enumerated"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.397949347" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
@@ -38,7 +38,7 @@
 							<tool id="cdt.managedbuild.tool.gnu.c.linker.exe.debug.2029346474" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.debug"/>
 							<tool id="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug.1710212525" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug">
 								<option id="gnu.cpp.link.option.paths.644461376" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" useByScannerDiscovery="false" valueType="libPaths">
-									<listOptionValue builtIn="false" value="/home/Libs/lib"/>
+									<listOptionValue builtIn="false" value="/home/adivek/Licencjat/Libs"/>
 								</option>
 								<option id="gnu.cpp.link.option.libs.1151399612" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" useByScannerDiscovery="false" valueType="libs">
 									<listOptionValue builtIn="false" value="sfml-system"/>

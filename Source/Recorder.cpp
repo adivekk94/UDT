@@ -15,31 +15,21 @@ void Recorder::recordData(const u32 recLength)
 	start(SAMPLE_FREQ);
 	sf::sleep(sf::milliseconds(recLength));
 	stop();
-}
-
-bool Recorder::onProcessSamples(const sf::Int16* samples,
-								std::size_t      sampleCount)
-{
-	samples = buffer.getSamples();
-	sampleCount = static_cast<std::size_t>(buffer.getSampleCount());
-	//TODO: proccess data
-	return true; //tmp
-}
-
-void Recorder::onStop()
-{
-	cout << "Buffer size1: " << getBuffer().getDuration().asSeconds() << endl;
-//	buffer = getBuffer();
-	//TODO: getDataToBuffer
+//	cout << "Record duration = " << getBuffer().getDuration().asSeconds() << " s" << endl;
+//	for(int i = 0; i < getBuffer().getSampleCount(); ++i)
+//	{
+//		cout << "Buff " << i << ": " << *(getBuffer().getSamples()+i) << endl;
+//	}
 }
 
 void Recorder::testRecordedSound()
 {
-	cout << "Buffer size: " << buffer.getDuration().asSeconds() << endl;
-	sf::Sound sound(buffer);
+	sf::Sound sound(getBuffer());
 	sound.play();
-	while(2 == sound.getStatus())
-	{
-
-	}
+	sf::sleep(getBuffer().getDuration());
 }
+//
+//sf::SoundBuffer Recorder::getBuffer()
+//{
+//	return buffer;
+//}

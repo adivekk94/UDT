@@ -38,19 +38,19 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: Licencjat
+all: UDT
 
 # Tool invocations
-Licencjat: $(OBJS) $(USER_OBJS)
+UDT: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C++ Linker'
-	g++ -L/home/Libs/lib -o "Licencjat" $(OBJS) $(USER_OBJS) $(LIBS)
+	g++ -L/home/adivek/Licencjat/Libs -o "UDT" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(CC_DEPS)$(C++_DEPS)$(EXECUTABLES)$(C_UPPER_DEPS)$(CXX_DEPS)$(OBJS)$(CPP_DEPS)$(C_DEPS) Licencjat
+	-$(RM) $(CC_DEPS)$(C++_DEPS)$(EXECUTABLES)$(C_UPPER_DEPS)$(CXX_DEPS)$(OBJS)$(CPP_DEPS)$(C_DEPS) UDT
 	-@echo ' '
 
 .PHONY: all clean dependents

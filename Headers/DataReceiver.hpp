@@ -17,11 +17,10 @@ class DataReceiver
 public:
 	DataReceiver();
 	void receiveData(const u32 recLen);
-	string getReceivedData() const;
+	const sf::SoundBuffer& getReceivedData() const;
 	void testRecordedSound();
 private:
-	Recorder recorder;
-	string   receivedData; //TODO: tmp string, will be processed data
+	Recorder 		  recorder;
 };
 
 #endif /* HEADERS_DATARECEIVER_HPP_ */

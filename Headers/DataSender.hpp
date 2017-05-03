@@ -16,12 +16,11 @@ class DataSender
 {
 public:
 	DataSender();
-	void sendData();
-	void setDataToSend(const string data);
-	string getData() const;
+	void sendData(const bool zero, const bool changed);
+	void setDataToSend(const u32 frequency, const u32 duration);
+	void getData() const;
 private:
 	Beeper beeper;
-	string dataToSend;
 };
 
 

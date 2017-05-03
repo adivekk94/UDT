@@ -17,12 +17,9 @@ class Recorder : public sf::SoundBufferRecorder
 public:
 	Recorder();
 	void recordData(const u32 delay);
-	void onStop();
-	bool onProcessSamples(const sf::Int16* samples,
-						  std::size_t 	   sampleCount);
 	void testRecordedSound();
 private:
-	sf::SoundBuffer buffer;
+//	sf::SoundBuffer buffer;
 };
 
 #endif /* HEADERS_RECORDER_HPP_ */

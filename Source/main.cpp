@@ -6,6 +6,9 @@
  */
 
 #include "../Headers/main.hpp"
+#include "tools/TextPlot.h"
+#include "transform/Fft.h"
+
 
 int main()
 {
@@ -24,31 +27,39 @@ int main()
 			cout << "Bad command. Exiting..." << endl;
 			return -1;
 	}
-//		sf::SoundBuffer sb;
-//		sb.loadFromFile("Source/choir.wav");
-//		sf::Sound sound(sb);
-//		sound.play();
-//		//TODO:check if it works
-//		while(2 == sound.getStatus())
-//		{
-//
-//		}
 
 	if(mainSystem.isInTxMode()) //TxMode
 	{
-		const string data = "Test";
-		mainSystem.dataSender.setDataToSend(data);
-		mainSystem.dataSender.sendData();
-		cout << "Data: " << data << "\nData has been send." << endl;
+		u32 counter = 0;
+		bool changed = false;
+//		mainSystem.dataSender.setDataToSend(data);
+		bool dataSend[] = {true, false, false, true, false, true, true, false};
+		for(int j = 0; j < 8; ++j)
+		{
+			for(int i = 0; i < 8; ++i)
+			{
+				mainSystem.dataSender.sendData(dataSend[i], changed);
+				counter++;
+			}
+			cout << "Send data: 10010110 " << endl;
+			if(counter > 15)
+			{
+				changed = !changed;
+				counter = 0;
+			}
+		}
+		mainSystem.dataSender.sendData(false, false); //only for check last bit proper
 	}
 	else //RxMode
 	{
-		mainSystem.dataReceiver.receiveData(3000);
-		const string data = mainSystem.dataReceiver.getReceivedData();
-		cout << "Data has been received.\nData: " << data << endl;
-		mainSystem.dataProcessor.processData(data);
-		mainSystem.dataReceiver.testRecordedSound();
+		const sf::SoundBuffer& data = mainSystem.dataReceiver.getReceivedData();
+		while(true)
+		{
+			mainSystem.dataReceiver.receiveData(1);
+			mainSystem.dataProcessor.processData(data);
+		}
 	}
 
+	cout << "End of program." << endl;
 	return 0;
 }

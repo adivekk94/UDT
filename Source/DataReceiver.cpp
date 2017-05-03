@@ -13,12 +13,11 @@ DataReceiver::DataReceiver()
 void DataReceiver::receiveData(const u32 recLen)
 {
 	recorder.recordData(recLen);
-	//TODO: setDataToReceivedData
 }
 
-string DataReceiver::getReceivedData() const
+const sf::SoundBuffer& DataReceiver::getReceivedData() const
 {
-	return receivedData;
+	return recorder.getBuffer();
 }
 
 void DataReceiver::testRecordedSound()
