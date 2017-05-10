@@ -34,21 +34,15 @@ int main()
 		bool changed = false;
 //		mainSystem.dataSender.setDataToSend(data);
 		bool dataSend[] = {true, false, false, true, false, true, true, false};
-		for(int j = 0; j < 8; ++j)
+		for(int j = 0; j < 2; ++j)
 		{
 			for(int i = 0; i < 8; ++i)
 			{
-				mainSystem.dataSender.sendData(dataSend[i], changed);
-				counter++;
+				mainSystem.dataSender.sendData(dataSend[i]);
 			}
 			cout << "Send data: 10010110 " << endl;
-			if(counter > 15)
-			{
-				changed = !changed;
-				counter = 0;
-			}
 		}
-		mainSystem.dataSender.sendData(false, false); //only for check last bit proper
+		mainSystem.dataSender.sendData(false); //only for check last bit proper
 	}
 	else //RxMode
 	{

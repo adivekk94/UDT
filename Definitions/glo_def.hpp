@@ -12,7 +12,7 @@ typedef unsigned char 	   u8;
 typedef unsigned int 	   u32;
 typedef unsigned long long u64;
 
-const u32 AMPLITUDE = 2048;
+const u32 AMPLITUDE = 8192;
 const u32 SAMPLE_FREQ = 44100;
 const u32 WINDOW_SIZE = 1024;
 

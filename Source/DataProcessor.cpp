@@ -63,17 +63,18 @@ void DataProcessor::processData(const sf::SoundBuffer& data)
 	calculateFoundFrequency();
 	u32 freq = getFoundFrequency();
 //	cout << freq << endl;
-	if(freq > 15500 && freq < 16500)
+	if(freq > 16800 && freq < 18000)
 //		cout << "0" << endl;
 		dataStr += "0";
-	else if(freq > 17500 && freq < 18500)
+	else if(freq > 18300 && freq < 19500)
 //		cout << "1" << endl;
 		dataStr += "1";
 	else
 	{
-		cout << "-" << endl;
+//		cout << "-" << endl;
 		if(dataStr.length() > 0)
 			cout << "Data: " << dataStr << endl;
+		dataStr.clear();
 	}
 }
 
