@@ -30,11 +30,9 @@ int main()
 
 	if(mainSystem.isInTxMode()) //TxMode
 	{
-		u32 counter = 0;
-		bool changed = false;
 //		mainSystem.dataSender.setDataToSend(data);
 		bool dataSend[] = {true, false, false, true, false, true, true, false};
-		for(int j = 0; j < 2; ++j)
+		for(int j = 0; j < 1; ++j)
 		{
 			for(int i = 0; i < 8; ++i)
 			{

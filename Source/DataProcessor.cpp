@@ -60,15 +60,16 @@ void DataProcessor::processData(const sf::SoundBuffer& data)
 //	Aquila::TextPlot plt("Spectrum");
 //	plt.plotSpectrum(spectrum);
 	calculateHighestFFTPosition(spectrum);
+//	cout << "HighestFftAmplitudePosition = " << highestFftAmplitudePosition << endl;
 	calculateFoundFrequency();
 	u32 freq = getFoundFrequency();
-//	cout << freq << endl;
-	if(freq > 16800 && freq < 18000)
+//	cout << "Freq = " << freq << endl;
+	if(freq > 17200 && freq < 18400)
 //		cout << "0" << endl;
-		dataStr += "0";
-	else if(freq > 18300 && freq < 19500)
-//		cout << "1" << endl;
 		dataStr += "1";
+	else if(freq > 18700 && freq < 20000)
+//		cout << "1" << endl;
+		dataStr += "0";
 	else
 	{
 //		cout << "-" << endl;

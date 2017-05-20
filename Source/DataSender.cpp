@@ -8,24 +8,24 @@
 #include "../Headers/DataSender.hpp"
 
 DataSender::DataSender()
-	: oneFreq(17000),
-	  zeroFreq(18500)
+	: oneFreq(17500),
+	  zeroFreq(19000)
 {}
 
-void DataSender::sendData(const bool zero)
+void DataSender::sendData(const bool isOne)
 {
 	const u32 dur = 100;
 	const double diff = 100;
-//	if(oneFreq > 17700)
-//	{
-//		oneFreq = 17000;
-//	}
-//	if(zeroFreq > 19200)
-//	{
-//		zeroFreq = 18500;
-//	}
+	if(oneFreq > 18200)
+	{
+		oneFreq = 17500;
+	}
+	if(zeroFreq > 19800)
+	{
+		zeroFreq = 19000;
+	}
 
-	if(!zero)
+	if(isOne)
 	{
 		beeper.beep(oneFreq, dur);
 		oneFreq += diff;
