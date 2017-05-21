@@ -35,7 +35,6 @@ void DataSender::sendData(const bool isOne)
 		beeper.beep(zeroFreq, dur);
 		zeroFreq += diff;
 	}
-	sf::sleep(sf::milliseconds(1));
 }
 
 void DataSender::setDataToSend(const u32 frequency, const u32 duration)

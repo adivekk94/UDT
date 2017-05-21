@@ -13,6 +13,8 @@
 #include "transform/FftFactory.h"
 #include "tools/TextPlot.h"
 
+#define AMP_THRESHOLD 1000000
+
 class DataProcessor
 {
 public:
@@ -20,6 +22,7 @@ public:
 	void processData(const sf::SoundBuffer& data);
 	void calculateFoundFrequency();
 	u32 getFoundFrequency() const;
+	void resetHighestFftAmplitudePosition();
 	void calculateHighestFFTPosition(Aquila::SpectrumType& spectrum);
 	void convertDataToArray(const u64 			   samplesAmount,
 					   	    const sf::SoundBuffer& data,

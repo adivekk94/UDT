@@ -17,7 +17,7 @@ class DataReceiver
 public:
 	DataReceiver();
 	void receiveData(const u32 recLen);
-	const sf::SoundBuffer& getReceivedData() const;
+	const sf::SoundBuffer getReceivedData() const;
 	void testRecordedSound();
 private:
 	Recorder 		  recorder;

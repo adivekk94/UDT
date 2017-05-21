@@ -15,7 +15,7 @@ void DataReceiver::receiveData(const u32 recLen)
 	recorder.recordData(recLen);
 }
 
-const sf::SoundBuffer& DataReceiver::getReceivedData() const
+const sf::SoundBuffer DataReceiver::getReceivedData() const
 {
 	return recorder.getBuffer();
 }

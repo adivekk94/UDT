@@ -19,6 +19,11 @@ void DataProcessor::calculateFoundFrequency()
 	foundFrequency = highestFftAmplitudePosition*SAMPLE_FREQ/WINDOW_SIZE;
 }
 
+void DataProcessor::resetHighestFftAmplitudePosition()
+{
+	highestFftAmplitudePosition = 0;
+}
+
 u32 DataProcessor::getFoundFrequency() const
 {
 	return foundFrequency;
@@ -28,13 +33,15 @@ void DataProcessor::calculateHighestFFTPosition(Aquila::SpectrumType& spectrum)
 {
 	double amp = 0.0, ampTmp = 0.0;
 	const u32 lengthToCheck = spectrum.size()/2;
-	for(u32 i = 1; i < lengthToCheck; ++i)
+//	for(u32 i = 1; i < lengthToCheck; ++i)
+	for(u32 i = lengthToCheck-1; i > lengthToCheck/2; --i)
 	{
 		ampTmp = sqrt(pow(spectrum.at(i).real(), 2)+pow(spectrum.at(i).imag(), 2));
-		if(ampTmp > amp)
+		if(ampTmp > AMP_THRESHOLD && ampTmp > amp)
 		{
 			amp = ampTmp;
 			highestFftAmplitudePosition = i;
+//			cout << "FFT " << i << " = " << ampTmp << ", freq = " << i*SAMPLE_FREQ/WINDOW_SIZE << endl;
 		}
 	}
 }
@@ -60,23 +67,36 @@ void DataProcessor::processData(const sf::SoundBuffer& data)
 //	Aquila::TextPlot plt("Spectrum");
 //	plt.plotSpectrum(spectrum);
 	calculateHighestFFTPosition(spectrum);
-//	cout << "HighestFftAmplitudePosition = " << highestFftAmplitudePosition << endl;
 	calculateFoundFrequency();
 	u32 freq = getFoundFrequency();
-//	cout << "Freq = " << freq << endl;
+//	cout << "Freq = " << freq << ", HighestFftAmplitudePosition = " << highestFftAmplitudePosition << endl;
 	if(freq > 17200 && freq < 18400)
-//		cout << "0" << endl;
+	{
 		dataStr += "1";
+	}
 	else if(freq > 18700 && freq < 20000)
-//		cout << "1" << endl;
+	{
 		dataStr += "0";
+	}
 	else
 	{
-//		cout << "-" << endl;
 		if(dataStr.length() > 0)
+		{
 			cout << "Data: " << dataStr << endl;
+			dataStr.clear();
+		}
+	}
+	if(dataStr.length() > 7)
+	{
+		cout << "Data: " << dataStr << endl;
 		dataStr.clear();
 	}
+	resetHighestFftAmplitudePosition();
+//	if(dataStr.length() > 7)
+//	{
+//		cout << "Data: " << dataStr << endl;
+//		dataStr.clear();
+//	}
 }
 
 
