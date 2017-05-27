@@ -27,10 +27,40 @@ public:
 	void convertDataToArray(const u64 			   samplesAmount,
 					   	    const sf::SoundBuffer& data,
 						    double 				   convertedData[]);
+	string getDataStr() const;
+	bool* getReceivedByte();
+	bool isDataRespReceived() const;
+	bool isByteReceived() const;
+	bool isCrcRespReceived() const;
+	bool isCrcReceived() const;
+	bool isInvalidTxReceived() const;
+	void setCrcReceived(const bool state);
+	void setDataReceived(const bool state);
+	void setInvalidTxReceived(const bool state);
+	void activateCrcExpected();
+	void deactivateCrcExpected();
+	void activateCrcRespExpected();
+	void deactivateCrcRespExpected();
+	void activateDataExpected();
+	void deactivateDataExpected();
+	void activateDataRespExpected();
+	void deactivateDataRespExpected();
+	bool isPositiveRespReceived() const;
 private:
 	u32 highestFftAmplitudePosition;
 	u32 foundFrequency;
 	string dataStr;
+	bool receivedByte[BYTE];
+	u8 currentBit;
+	bool dataRespReceived;
+	bool dataReceived;
+	bool crcRespReceived;
+	bool crcReceived;
+	bool invalidTxReceived;
+	bool crcExpected;
+	bool crcRespExpected;
+	bool dataExpected;
+	bool dataRespExpected;
 };
 
 #endif /* HEADERS_DATAPROCESSOR_HPP_ */

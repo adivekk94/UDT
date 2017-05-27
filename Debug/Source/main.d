@@ -22,6 +22,7 @@ Source/main.o: ../Source/main.cpp ../Source/../Headers/main.hpp \
  /home/adivek/Licencjat/aquila-src/aquila/tools/TextPlot.h \
  /home/adivek/Licencjat/aquila-src/aquila/tools/../global.h \
  /home/adivek/Licencjat/aquila-src/aquila/tools/../source/SignalSource.h \
+ ../Source/../Headers/../Headers/../Headers/CRC.hpp \
  ../Source/../Headers/../Headers/../Definitions/glo_def.hpp \
  ../Source/../Headers/../Headers/../Definitions/glo_inc.hpp \
  ../Source/../Headers/Beeper.hpp ../Source/../Headers/StarWars.hpp \
@@ -75,6 +76,8 @@ Source/main.o: ../Source/main.cpp ../Source/../Headers/main.hpp \
 /home/adivek/Licencjat/aquila-src/aquila/tools/../global.h:
 
 /home/adivek/Licencjat/aquila-src/aquila/tools/../source/SignalSource.h:
+
+../Source/../Headers/../Headers/../Headers/CRC.hpp:
 
 ../Source/../Headers/../Headers/../Definitions/glo_def.hpp:
 

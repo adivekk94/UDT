@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <string>
+#include <cstring>
 #include <SFML/Audio.hpp>
 
 using namespace std;

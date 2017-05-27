@@ -21,6 +21,7 @@ Source/System.o: ../Source/System.cpp ../Source/../Headers/System.hpp \
  /home/adivek/Licencjat/aquila-src/aquila/tools/TextPlot.h \
  /home/adivek/Licencjat/aquila-src/aquila/tools/../global.h \
  /home/adivek/Licencjat/aquila-src/aquila/tools/../source/SignalSource.h \
+ ../Source/../Headers/../Headers/CRC.hpp \
  ../Source/../Headers/../Definitions/glo_def.hpp \
  ../Source/../Headers/../Definitions/glo_inc.hpp
 
@@ -69,6 +70,8 @@ Source/System.o: ../Source/System.cpp ../Source/../Headers/System.hpp \
 /home/adivek/Licencjat/aquila-src/aquila/tools/../global.h:
 
 /home/adivek/Licencjat/aquila-src/aquila/tools/../source/SignalSource.h:
+
+../Source/../Headers/../Headers/CRC.hpp:
 
 ../Source/../Headers/../Definitions/glo_def.hpp:
 

@@ -5,6 +5,7 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
 ../Source/Beeper.cpp \
+../Source/CRC.cpp \
 ../Source/DataProcessor.cpp \
 ../Source/DataReceiver.cpp \
 ../Source/DataSender.cpp \
@@ -14,6 +15,7 @@ CPP_SRCS += \
 
 OBJS += \
 ./Source/Beeper.o \
+./Source/CRC.o \
 ./Source/DataProcessor.o \
 ./Source/DataReceiver.o \
 ./Source/DataSender.o \
@@ -23,6 +25,7 @@ OBJS += \
 
 CPP_DEPS += \
 ./Source/Beeper.d \
+./Source/CRC.d \
 ./Source/DataProcessor.d \
 ./Source/DataReceiver.d \
 ./Source/DataSender.d \

@@ -14,7 +14,6 @@ DataSender::DataSender()
 
 void DataSender::sendData(const bool isOne)
 {
-	const u32 dur = 100;
 	const double diff = 100;
 	if(oneFreq > 18200)
 	{
@@ -27,13 +26,29 @@ void DataSender::sendData(const bool isOne)
 
 	if(isOne)
 	{
-		beeper.beep(oneFreq, dur);
+		beeper.beep(oneFreq, BEEP_DURATION);
 		oneFreq += diff;
 	}
 	else
 	{
-		beeper.beep(zeroFreq, dur);
+		beeper.beep(zeroFreq, BEEP_DURATION);
 		zeroFreq += diff;
+	}
+}
+
+void DataSender::sendPositiveResp()
+{
+	for(u32 i = 0; i < RESP_LENGTH; ++i)
+	{
+		beeper.beep(oneFreq, BEEP_DURATION);
+	}
+}
+
+void DataSender::sendNegativeResp()
+{
+	for(u32 i = 0; i < RESP_LENGTH; ++i)
+	{
+		beeper.beep(zeroFreq, BEEP_DURATION);
 	}
 }
 

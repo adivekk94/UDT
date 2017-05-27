@@ -11,6 +11,7 @@
 #include "../Headers/DataSender.hpp"
 #include "../Headers/DataReceiver.hpp"
 #include "../Headers/DataProcessor.hpp"
+#include "../Headers/CRC.hpp"
 #include "../Definitions/glo_def.hpp"
 #include "../Definitions/glo_inc.hpp"
 
