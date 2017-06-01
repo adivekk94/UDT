@@ -2,6 +2,7 @@ Source/DataProcessor.o: ../Source/DataProcessor.cpp \
  ../Source/../Headers/DataProcessor.hpp \
  ../Source/../Headers/../Definitions/glo_def.hpp \
  ../Source/../Headers/../Definitions/glo_inc.hpp \
+ ../Source/../Headers/../Definitions/glo_inc.hpp \
  /home/adivek/Licencjat/aquila-src/aquila/transform/FftFactory.h \
  /home/adivek/Licencjat/aquila-src/aquila/transform/../global.h \
  /home/adivek/Licencjat/aquila-src/aquila/transform/Fft.h \
@@ -17,6 +18,8 @@ Source/DataProcessor.o: ../Source/DataProcessor.cpp \
 ../Source/../Headers/DataProcessor.hpp:
 
 ../Source/../Headers/../Definitions/glo_def.hpp:
+
+../Source/../Headers/../Definitions/glo_inc.hpp:
 
 ../Source/../Headers/../Definitions/glo_inc.hpp:
 

@@ -12,6 +12,7 @@
 #include <string>
 #include <cstring>
 #include <SFML/Audio.hpp>
+#include <bitset>
 
 using namespace std;
 

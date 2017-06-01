@@ -20,22 +20,28 @@ class DataProcessor
 public:
 	DataProcessor();
 	void processData(const sf::SoundBuffer& data);
+	bool getCalculatedParityBit(const DataBitset& data, const bool forCalc = true);
+	bool isParityCorrect(const DataBitset& data);
 	void calculateFoundFrequency();
 	u32 getFoundFrequency() const;
 	void resetHighestFftAmplitudePosition();
 	void calculateHighestFFTPosition(Aquila::SpectrumType& spectrum);
-	void convertDataToArray(const u64 			   samplesAmount,
-					   	    const sf::SoundBuffer& data,
-						    double 				   convertedData[]);
+	void convertDataToArray(const u64 			   		 samplesAmount,
+													const sf::SoundBuffer& data,
+													double* 				   			 convertedData);
 	string getDataStr() const;
-	bool* getReceivedByte();
+	DataBitset getReceivedData() const;
 	bool isDataRespReceived() const;
+	bool isDataRespReceivedPropably() const;
 	bool isByteReceived() const;
 	bool isCrcRespReceived() const;
 	bool isCrcReceived() const;
 	bool isInvalidTxReceived() const;
 	void setCrcReceived(const bool state);
+	void setCrcRespReceived(const bool state);
 	void setDataReceived(const bool state);
+	void setDataRespReceived(const bool state);
+	void setDataRespReceivedPropably(const bool state);
 	void setInvalidTxReceived(const bool state);
 	void activateCrcExpected();
 	void deactivateCrcExpected();
@@ -46,13 +52,20 @@ public:
 	void activateDataRespExpected();
 	void deactivateDataRespExpected();
 	bool isPositiveRespReceived() const;
+	bool isPositiveRespReceivedPropably() const;
+	bool isCrcRespExpectedActive() const;
+	bool isDataRespExpectedActive() const;
+	bool isCorrectDataSizeReceived() const;
+	void setCorrectDataSizeReceived(const bool state);
 private:
 	u32 highestFftAmplitudePosition;
 	u32 foundFrequency;
 	string dataStr;
-	bool receivedByte[BYTE];
+	DataBitset receivedData;
+	bool correctDataSizeReceived;
 	u8 currentBit;
 	bool dataRespReceived;
+	bool dataRespReceivedPropably;
 	bool dataReceived;
 	bool crcRespReceived;
 	bool crcReceived;

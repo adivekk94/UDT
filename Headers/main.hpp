@@ -13,5 +13,6 @@
 #include "StarWars.hpp"
 
 static System mainSystem;
+CRC crc;
 
 #endif /* HEADERS_MAIN_HPP_ */

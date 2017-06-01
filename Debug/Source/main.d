@@ -3,6 +3,7 @@ Source/main.o: ../Source/main.cpp ../Source/../Headers/main.hpp \
  ../Source/../Headers/../Headers/../Headers/DataSender.hpp \
  ../Source/../Headers/../Headers/../Headers/../Definitions/glo_def.hpp \
  ../Source/../Headers/../Headers/../Headers/../Definitions/glo_inc.hpp \
+ ../Source/../Headers/../Headers/../Headers/../Definitions/glo_inc.hpp \
  ../Source/../Headers/../Headers/../Headers/Beeper.hpp \
  /home/adivek/Licencjat/aquila-src/aquila/source/generator/SineGenerator.h \
  /home/adivek/Licencjat/aquila-src/aquila/source/generator/Generator.h \
@@ -36,6 +37,8 @@ Source/main.o: ../Source/main.cpp ../Source/../Headers/main.hpp \
 ../Source/../Headers/../Headers/../Headers/DataSender.hpp:
 
 ../Source/../Headers/../Headers/../Headers/../Definitions/glo_def.hpp:
+
+../Source/../Headers/../Headers/../Headers/../Definitions/glo_inc.hpp:
 
 ../Source/../Headers/../Headers/../Headers/../Definitions/glo_inc.hpp:
 

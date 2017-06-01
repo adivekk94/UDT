@@ -8,9 +8,11 @@
 #ifndef DEFINITIONS_GLO_DEF_HPP_
 #define DEFINITIONS_GLO_DEF_HPP_
 
+#include "glo_inc.hpp"
+
 typedef unsigned char 	   u8;
-typedef char 	   		   i8;
-typedef unsigned int 	   u32;
+typedef char 	   		   		 i8;
+typedef unsigned int 	   	 u32;
 typedef unsigned long long u64;
 
 const u32 AMPLITUDE = 8192;
@@ -21,6 +23,12 @@ const u8  CRC_DIVIDER_LENGTH = 4;
 const u8  CRC_LENGTH = 3;
 const u8  RESP_LENGTH = 3;
 const u32 BEEP_DURATION = 100;
+const u8  DATA_SIZE = BYTE + CRC_LENGTH + 1;
+
+typedef bitset<CRC_LENGTH> CrcBitset;
+typedef bitset<DATA_SIZE>  DataBitset;
+
+
 
 enum EMode
 {

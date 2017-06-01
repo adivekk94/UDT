@@ -17,12 +17,12 @@ public:
 	CRC() : crc(0)
 	{}
 
-	void calculateCRC(const bool *byte);
-	bool isByteCorrect(const bool *byte);
-	u8 getCRC() const;
+	void calculateCRC(DataBitset data);
+	bool isByteCorrect(DataBitset data);
+	bitset<CRC_LENGTH> getCRC() const;
 	void setCRC(const u8 val);
 private:
-	u8 crc;
+	bitset<CRC_LENGTH> crc;
 };
 
 #endif /* HEADERS_CRC_HPP_ */

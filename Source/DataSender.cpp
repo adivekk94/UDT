@@ -12,7 +12,7 @@ DataSender::DataSender()
 	  zeroFreq(19000)
 {}
 
-void DataSender::sendData(const bool isOne)
+void DataSender::sendOneBit(const bool isOne)
 {
 	const double diff = 100;
 	if(oneFreq > 18200)
@@ -33,6 +33,14 @@ void DataSender::sendData(const bool isOne)
 	{
 		beeper.beep(zeroFreq, BEEP_DURATION);
 		zeroFreq += diff;
+	}
+}
+
+void DataSender::sendData(const bitset<DATA_SIZE> data)
+{
+	for(u32 i = 0; i < DATA_SIZE; ++i)
+	{
+		sendOneBit(data[i]);
 	}
 }
 

@@ -1,6 +1,7 @@
 Source/Beeper.o: ../Source/Beeper.cpp ../Source/../Headers/Beeper.hpp \
  ../Source/../Headers/../Definitions/glo_def.hpp \
  ../Source/../Headers/../Definitions/glo_inc.hpp \
+ ../Source/../Headers/../Definitions/glo_inc.hpp \
  /home/adivek/Licencjat/aquila-src/aquila/source/generator/SineGenerator.h \
  /home/adivek/Licencjat/aquila-src/aquila/source/generator/Generator.h \
  /home/adivek/Licencjat/aquila-src/aquila/source/generator/../SignalSource.h \
@@ -12,6 +13,8 @@ Source/Beeper.o: ../Source/Beeper.cpp ../Source/../Headers/Beeper.hpp \
 ../Source/../Headers/Beeper.hpp:
 
 ../Source/../Headers/../Definitions/glo_def.hpp:
+
+../Source/../Headers/../Definitions/glo_inc.hpp:
 
 ../Source/../Headers/../Definitions/glo_inc.hpp:
 

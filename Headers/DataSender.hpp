@@ -16,7 +16,8 @@ class DataSender
 {
 public:
 	DataSender();
-	void sendData(const bool zero);
+	void sendOneBit(const bool zero);
+	void sendData(const bitset<DATA_SIZE> data);
 	void sendPositiveResp();
 	void sendNegativeResp();
 	void setDataToSend(const u32 frequency, const u32 duration);

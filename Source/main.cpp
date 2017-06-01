@@ -10,6 +10,33 @@
 #include "transform/Fft.h"
 #include <cstdlib>
 
+void showData(DataBitset data)
+{
+	cout << "DATA: ";
+	for(u32 i = 0; i < DATA_SIZE; ++i)
+	{
+		cout << data[i];
+	}
+	cout << endl;
+}
+
+void showDataByte(const DataBitset& data)
+{
+//	cout << "BYTE: " << data.to_string().substr(0, 8) << ", as char = '" <<
+//			static_cast<char>(data.to_ulong()) << "'" << endl;
+	cout << static_cast<char>(data.to_ulong()) << endl;
+}
+
+void prepareDataToSend(DataBitset& data)
+{
+	crc.calculateCRC(data);
+	CrcBitset calculatedCrc = crc.getCRC();
+	for(u32 i = 0; i < CRC_LENGTH; ++i)
+	{
+		data.set(BYTE+i, calculatedCrc[i]);
+	}
+	data.set(DATA_SIZE-1, mainSystem.dataProcessor.getCalculatedParityBit(data));
+}
 
 int main(int argc, char* argv[])
 {
@@ -29,128 +56,87 @@ int main(int argc, char* argv[])
 			return -1;
 	}
 
-//	u32 numOfBytes = 1;
-//	if(2 == argc)
-//	{
-//		numOfBytes = atoi(argv[1]);
-//	}
-
-	CRC crc;
-//	bool dataSend[] = {1, 1, 0, 1, 0, 1, 0, 1}; //CRC = 2
-//	bool dataSend[] = {1, 1, 0, 0, 1, 0, 0, 1}; //CRC = 1
+//	string dataString[4] = {"000001110101", "000010011001", "000010000011", "000010110100"};
+	string dataString[5] = {"000001001101", "000001101001", "000001110011", "000001101001", "000001100001"};
+	bool dataReceivedCorrectly = true;
 	if(mainSystem.isInTxMode()) //TxMode
 	{
-		bool dataSend[] = {1, 0, 1, 0, 1, 1, 1, 0}; //CRC = 5
-		crc.calculateCRC(dataSend);
-		bool crcBits[CRC_LENGTH*2];
-		u8 tmpCrc = crc.getCRC();
-		for(u32 i = 0; i < CRC_LENGTH; ++i)
+		DataBitset dataToSend;
+		for(u32 i = 0; i < 5; ++i)
 		{
-			crcBits[i] = tmpCrc%2;
-			tmpCrc /= 2;
-		}
-		memcpy(crcBits+CRC_LENGTH, crcBits, 3);
-		for(u32 i = 0; i < CRC_LENGTH*2; ++i)
-		{
-			mainSystem.dataSender.sendData(crcBits[i]);
-		}
-		mainSystem.dataProcessor.activateCrcRespExpected();
-
-		sf::SoundBuffer data2;
-		while(true)
-		{
-			mainSystem.dataReceiver.receiveData(1);
-			data2 = mainSystem.dataReceiver.getReceivedData();
-			mainSystem.dataProcessor.processData(data2);
-			if(mainSystem.dataProcessor.isCrcRespReceived())
+			dataToSend = DataBitset(dataString[i]);
+			prepareDataToSend(dataToSend);
+			cout << "Bitset: " << dataToSend << endl;
+			mainSystem.dataSender.sendData(dataToSend);
+			sf::SoundBuffer data2;
+			while(true)
 			{
-				if(mainSystem.dataProcessor.isPositiveRespReceived())
+				dataReceivedCorrectly = true;
+				mainSystem.dataReceiver.receiveData(1);
+				data2 = mainSystem.dataReceiver.getReceivedData();
+				mainSystem.dataProcessor.processData(data2);
+				if(mainSystem.dataProcessor.isDataRespReceived()
+					 || mainSystem.dataProcessor.isDataRespReceivedPropably())
 				{
-					cout << "CRC is good. Should now send Tx." << endl;
-					mainSystem.dataProcessor.deactivateCrcRespExpected();
-					for(u32 i = 0; i < BYTE; ++i)
+					if(mainSystem.dataProcessor.isPositiveRespReceived())
 					{
-						mainSystem.dataSender.sendData(dataSend[i]);
+						cout << "Data send correctly" << endl;
 					}
-					mainSystem.dataProcessor.activateDataRespExpected();
-				}
-				else
-				{
-					cout << "CRC is bad. Retranssmission." << endl;
-					for(u32 i = 0; i < CRC_LENGTH*2; ++i)
+					else
 					{
-						mainSystem.dataSender.sendData(crcBits[i]);
+						cout << "Data send incorrectly. Retransmission needed." << endl;
+						dataReceivedCorrectly = false;
+						sf::sleep(sf::milliseconds(100));
+						mainSystem.dataSender.sendData(dataToSend);
+						sf::sleep(sf::milliseconds(100));
 					}
-					mainSystem.dataProcessor.activateCrcRespExpected();
+					mainSystem.dataProcessor.setDataRespReceived(false);
+					mainSystem.dataProcessor.setDataRespReceivedPropably(false);
+					if(dataReceivedCorrectly)
+					{
+						break;
+					}
 				}
 			}
-			else if(mainSystem.dataProcessor.isDataRespReceived())
-			{
-				if(mainSystem.dataProcessor.isPositiveRespReceived())
-				{
-					cout << "Data send and received correctly." << endl;
-					mainSystem.dataProcessor.deactivateDataRespExpected();
-					break;
-				}
-				else
-				{
-					cout << "Bad data received. Retranssmission." << endl;
-					for(u32 i = 0; i < BYTE; ++i)
-					{
-						mainSystem.dataSender.sendData(dataSend[i]);
-					}
-					mainSystem.dataProcessor.activateDataRespExpected();
-				}
-			}
+			sf::sleep(sf::milliseconds(1000));
 		}
 	}
 	else //RxMode
 	{
-		mainSystem.dataProcessor.activateCrcExpected();
 		sf::SoundBuffer data;
 		while(true)
 		{
 			mainSystem.dataReceiver.receiveData(1);
 			data = mainSystem.dataReceiver.getReceivedData();
 			mainSystem.dataProcessor.processData(data);
-			if(mainSystem.dataProcessor.isCrcReceived())
+			DataBitset receivedData;
+			if(mainSystem.dataProcessor.isCorrectDataSizeReceived())
 			{
-				bool* tmpCrc = mainSystem.dataProcessor.getReceivedByte();
-				if(tmpCrc[0] == tmpCrc[3]
-				   && tmpCrc[1] == tmpCrc[4]
-				   && tmpCrc[2] == tmpCrc[5])
+				receivedData = mainSystem.dataProcessor.getReceivedData();
+				if(mainSystem.dataProcessor.isParityCorrect(receivedData)
+					 && crc.isByteCorrect(receivedData))
 				{
-					cout << "CRC good received. Send ACK." << endl;
-					const u8 crcVal = tmpCrc[2]*1 + tmpCrc[1]*2 + tmpCrc[0]*4;
-					crc.setCRC(crcVal);
+//					cout << "CORRECT RECEIVED ";
+					showDataByte(receivedData);
+					sf::sleep(sf::milliseconds(100));
 					mainSystem.dataSender.sendPositiveResp();
-					mainSystem.dataProcessor.deactivateCrcExpected();
-					mainSystem.dataProcessor.activateDataExpected();
+					sf::sleep(sf::milliseconds(100));
 				}
 				else
 				{
-					cout << "Bad CRC. Need to be retranssmitted." << endl;
+//					cout << "INCORRECT RECEIVED BYTE" << endl;
+					sf::sleep(sf::milliseconds(100));
 					mainSystem.dataSender.sendNegativeResp();
+					sf::sleep(sf::milliseconds(100));
 				}
-				mainSystem.dataProcessor.setCrcReceived(false);
-			}
-			else if(mainSystem.dataProcessor.isByteReceived())
-			{
-				if(crc.isByteCorrect(mainSystem.dataProcessor.getReceivedByte()))
-				{
-					mainSystem.dataSender.sendPositiveResp();
-					mainSystem.dataProcessor.deactivateDataExpected();
-				}
-				else
-				{
-					mainSystem.dataSender.sendNegativeResp();
-				}
-				mainSystem.dataProcessor.setDataReceived(false);
+				mainSystem.dataProcessor.setCorrectDataSizeReceived(false);
 			}
 			else if(mainSystem.dataProcessor.isInvalidTxReceived())
 			{
+				sf::sleep(sf::milliseconds(100));
 				mainSystem.dataSender.sendNegativeResp();
 				mainSystem.dataProcessor.setInvalidTxReceived(false);
+				sf::sleep(sf::milliseconds(100));
 			}
 		}
 	}
