@@ -10,8 +10,8 @@
 
 #include "../Definitions/glo_def.hpp"
 #include "../Definitions/glo_inc.hpp"
-#include "transform/FftFactory.h"
-#include "tools/TextPlot.h"
+#include "aquila/transform/FftFactory.h"
+#include "aquila/tools/TextPlot.h"
 
 #define AMP_THRESHOLD 1000000
 

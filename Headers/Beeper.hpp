@@ -10,8 +10,8 @@
 
 #include "../Definitions/glo_def.hpp"
 #include "../Definitions/glo_inc.hpp"
-#include "source/generator/SineGenerator.h"
-#include "wrappers/SoundBufferAdapter.h"
+#include "aquila/source/generator/SineGenerator.h"
+#include "aquila/wrappers/SoundBufferAdapter.h"
 
 using namespace std;
 

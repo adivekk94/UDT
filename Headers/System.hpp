@@ -23,6 +23,7 @@ public:
 	bool isInRxMode() const;
 	void setTxMode();
 	void setRxMode();
+    void operator=(const System& sys);
 
 	DataSender    dataSender;
 	DataReceiver  dataReceiver;

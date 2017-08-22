@@ -31,4 +31,9 @@ void System::setRxMode()
 	mode = ERxMode;
 }
 
+void System::operator=(const System& sys)
+{
+    mode = sys.mode;
+}
+
 

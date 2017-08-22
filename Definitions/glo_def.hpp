@@ -13,9 +13,11 @@
 typedef unsigned char 	   u8;
 typedef char 	   		   		 i8;
 typedef unsigned int 	   	 u32;
+typedef int 	   	 				 i32;
 typedef unsigned long long u64;
+typedef long long 				 i64;
 
-const u32 AMPLITUDE = 8192;
+const u32 AMPLITUDE = 1024;
 const u32 SAMPLE_FREQ = 44100;
 const u32 WINDOW_SIZE = 1024;
 const u8  BYTE = 8;

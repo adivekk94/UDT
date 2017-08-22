@@ -13,7 +13,8 @@ Recorder::Recorder()
 void Recorder::recordData(const u32 recLength)
 {
 	start(SAMPLE_FREQ);
-	sf::sleep(sf::milliseconds(recLength));
+	sf::sleep(sf::microseconds(recLength));
+//	sf::sleep(sf::milliseconds(recLength));
 	stop();
 }
 
