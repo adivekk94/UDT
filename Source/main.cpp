@@ -10,7 +10,7 @@
 #include "aquila/transform/Fft.h"
 #include <cstdlib>
 
-const string WORD_TO_END = "STOP";
+const string WORD_TO_END = "STOPSTOPSTOPSTOP";
 
 void showData(DataBitset& data)
 {
@@ -40,83 +40,70 @@ void prepareDataToSend(DataBitset& data)
     setParityBit(data);
 }
 
-//for GTK
-/*struct ButtonsClickFunctions
+void showMainMenu()
 {
-	void buttonSetTxMode()
-	{
-		action = 's';
-		cout << "SET TX MODE" << endl;
-	}
+	system("clear");
+	cout << endl << "     	Welcome to UDT v. 1.0  		   " << endl
+			 << "     	Author: Adrian Graczyk  	 	 " << endl << endl
+			 << "####################################" << endl
+			 << "##           MAIN MENU            ##" << endl
+			 << "####################################" << endl
+			 << "##                                ##" << endl
+			 << "##        1. Send data            ##" << endl
+			 << "##        2. Receive data         ##" << endl
+			 << "##                                ##" << endl
+			 << "##                                ##" << endl
+			 << "## Type number and press enter... ##" << endl
+			 << "##                                ##" << endl
+			 << "####################################" << endl;
+}
 
-	void buttonSetRxMode()
-	{
-		action = 'r';
-		cout << "SET RX MODE" << endl;
-	}
-};
-
-
-
-void runWindow()
+void showTxMenu()
 {
-	auto app = Gtk::Application::create("org.gtkmm.examples.base");
+	system("clear");
+		cout << "####################################" << endl
+				 << "##         Transmitter mode       ##" << endl
+				 << "####################################" << endl
+				 << "##                                ##" << endl
+				 << "##       Type word and press      ##" << endl
+				 << "##       enter to send data...    ##" << endl
+				 << "##                                ##" << endl
+				 << "####################################" << endl
+				 << endl << "\tWord: STOP";
+		cout << flush;
+		//TODO: update to access type word
+}
 
-	Gtk::Window window;
-	window.set_default_size(200, 200);
-
-	Gtk::Box box;
-	box.set_visible(true);
-
-	Gtk::Label received;
-	received.set_visible(true);
-	received.set_text("TEST");
-
-	ButtonsClickFunctions bcf;
-	Gtk::Button sendButton;
-	sendButton.set_border_width(1);
-	sendButton.set_visible(true);
-	sendButton.set_label("Send data");
-	sendButton.signal_clicked().connect(sigc::mem_fun(bcf, &ButtonsClickFunctions::buttonSetTxMode));
-
-	Gtk::Button receiveButton;
-	receiveButton.set_border_width(1);
-	receiveButton.set_visible(true);
-	receiveButton.set_label("Receive data");
-	receiveButton.signal_clicked().connect(sigc::mem_fun(bcf, &ButtonsClickFunctions::buttonSetRxMode));
-
-	box.pack_start(sendButton);
-	box.pack_start(receiveButton);
-	box.pack_start(received);
-	window.add(box);
-
-	app->run(window);
-}*/
-
+void showRxMenu()
+{
+	system("clear");
+	cout << "####################################" << endl
+			 << "##          Receiver mode         ##" << endl
+			 << "####################################" << endl;
+	cout << flush;
+}
 
 
 int main(int argc, char* argv[])
 {
-//	thread windowThread(runWindow);
-
-	cout << "Type command to execute:\n1. Send data (s)\n2. Receive data (r)\nCommand: ";
+	bool rxStarted = false;
+	showMainMenu();
 	char action = 'n';
 	cin >> action;
-//	while('n' == action) {}; //for GTK
 	switch(action)
 	{
-		case 'r':
-			mainSystem.setRxMode();
-		break;
-		case 's':
+		case '1':
+			showTxMenu();
 			mainSystem.setTxMode();
+		break;
+		case '2':
+			showRxMenu();
+			mainSystem.setRxMode();
 		break;
 		default:
 			cout << "Bad command. Exiting..." << endl;
 			return -1;
 	}
-//	mainSystem.dataSender.sendOneBit(true);
-//	return 0;
 
 //	string dataString[4] = {"000001110101", "000010011001", "000010000011", "000010110100"};
 //	string dataString[5] = {"000001001101", "000001101001", "000001110011", "000001101001", "000001100001"}; //Misia
@@ -128,6 +115,8 @@ int main(int argc, char* argv[])
 	if(mainSystem.isInTxMode()) //TxMode
 	{
 		DataBitset dataToSend;
+		for(u32 j = 0; j < 4; ++j)
+		{
 		for(u32 i = 0; i < 4; ++i)
 		{
 			dataToSend = DataBitset(dataString[i]);
@@ -144,11 +133,7 @@ int main(int argc, char* argv[])
 				if(mainSystem.dataProcessor.isDataRespReceived()
 					 || mainSystem.dataProcessor.isDataRespReceivedPropably())
 				{
-					if(mainSystem.dataProcessor.isPositiveRespReceived())
-					{
-//						cout << "Data send correctly" << endl;
-					}
-					else
+					if(!mainSystem.dataProcessor.isPositiveRespReceived())
 					{
 //						cout << "Data send incorrectly. Retransmission needed." << endl;
 						dataReceivedCorrectly = false;
@@ -166,9 +151,11 @@ int main(int argc, char* argv[])
 			}
 			sf::sleep(sf::milliseconds(timeDelay));
 		}
+		}
 	}
 	else //RxMode
 	{
+		cout << "\tWaiting for transmission..." << endl;
 		sf::SoundBuffer data;
 		while(true)
 		{
@@ -178,6 +165,13 @@ int main(int argc, char* argv[])
 			DataBitset receivedData;
 			if(mainSystem.dataProcessor.isCorrectDataSizeReceived())
 			{
+				if(!rxStarted)
+				{
+					cout << "\tData receiving started..." << endl << endl;
+					cout << "\tReceived data: ";
+					cout << flush;
+					rxStarted = true;
+				}
 				receivedData = mainSystem.dataProcessor.getReceivedData();
 				if(mainSystem.dataProcessor.isParityCorrect(receivedData)
 					 && crc.isByteCorrect(receivedData))
@@ -214,6 +208,5 @@ int main(int argc, char* argv[])
 		}
 	}
 
-	cout << "End of program." << endl;
-//	return 0;
+	cout << endl << "End of program." << endl;
 }

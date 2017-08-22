@@ -65,17 +65,10 @@ void DataProcessor::calculateHighestFFTPosition(Aquila::SpectrumType& spectrum)
 {
 	double amp = 0.0, ampTmp = 0.0;
 	const u32 lengthToCheck = spectrum.size()/2;
-	i64 realPart = 0;
-	i64 imagPart = 0;
-//	for(u32 i = 1; i < lengthToCheck; ++i)
+
 	for(u32 i = lengthToCheck-1; i > lengthToCheck/2; --i)
 	{
-		realPart = spectrum.at(i).real();
-		imagPart = spectrum.at(i).imag();
-//		cout << "REAL: " << spectrum.at(i).real() << " , IMAG: " << spectrum.at(i).imag() << endl;
-//		cout << "REAL: " << realPart << " , IMAG: " << imagPart << endl;
-//		ampTmp = sqrt(pow(spectrum.at(i).real(), 2)+pow(spectrum.at(i).imag(), 2));
-		ampTmp = sqrt(pow(realPart, 2)+pow(imagPart, 2)); //TODO: possible memory leaks in pow
+		ampTmp = abs(spectrum.at(i));
 		if(ampTmp > AMP_THRESHOLD && ampTmp > amp)
 		{
 			amp = ampTmp;
@@ -103,8 +96,6 @@ void DataProcessor::processData(const sf::SoundBuffer& data)
 	auto fft = Aquila::FftFactory::getFft(WINDOW_SIZE);
 
 	Aquila::SpectrumType spectrum = fft->fft(convertedData);
-//	Aquila::TextPlot plt("Spectrum");
-//	plt.plotSpectrum(spectrum);
 	calculateHighestFFTPosition(spectrum);
 	calculateFoundFrequency();
 	u32 freq = getFoundFrequency();
