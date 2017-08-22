@@ -100,14 +100,36 @@ void DataProcessor::processData(const sf::SoundBuffer& data)
 	calculateFoundFrequency();
 	u32 freq = getFoundFrequency();
 //	cout << "Freq = " << freq << ", HighestFftAmplitudePosition = " << highestFftAmplitudePosition << endl;
-	if(freq > 17200 && freq < 18400)
+	if(freq > 17400 && freq < 17600) //11
 	{
+		cout << "Rcv 11: " << freq << endl;
+		receivedData[currentBit] = 1;
+		++currentBit;
 		receivedData[currentBit] = 1;
 		++currentBit;
 	}
-	else if(freq > 18700 && freq < 20000)
+	else if(freq > 18700 && freq < 18900) //00
 	{
+		cout << "Rcv 00: " << freq << endl;
 		receivedData[currentBit] = 0;
+		++currentBit;
+		receivedData[currentBit] = 0;
+		++currentBit;
+	}
+	else if(freq > 16700 && freq < 16900) //10
+	{
+		cout << "Rcv 10: " << freq << endl;
+		receivedData[currentBit] = 1;
+		++currentBit;
+		receivedData[currentBit] = 0;
+		++currentBit;
+	}
+	else if(freq > 19900 && freq < 20100) //01
+	{
+		cout << "Rcv 01: " << freq << endl;
+		receivedData[currentBit] = 0;
+		++currentBit;
+		receivedData[currentBit] = 1;
 		++currentBit;
 	}
 	else
@@ -117,12 +139,12 @@ void DataProcessor::processData(const sf::SoundBuffer& data)
 		{
 			correctDataSizeReceived = true;
 		}
-		else if((RESP_LENGTH == currentBit)
-				    || RESP_LENGTH+1 == currentBit)
+		else if(((2*RESP_LENGTH) == currentBit)
+				    || (2*(RESP_LENGTH+1)) == currentBit)
 		{
 			dataRespReceived = true;
 		}
-		else if(RESP_LENGTH-1 == currentBit)
+		else if((2*(RESP_LENGTH-1)) == currentBit)
 		{
 			dataRespReceivedPropably = true;
 		}

@@ -12,11 +12,19 @@
 #include "../Definitions/glo_inc.hpp"
 #include "Beeper.hpp"
 
+enum EBitsData
+{
+	EZeroZero,
+	EZeroOne,
+	EOneZero,
+	EOneOne
+};
+
 class DataSender
 {
 public:
 	DataSender();
-	void sendOneBit(const bool zero);
+	void sendTwoBits(const EBitsData twoBits);
 	void sendData(const bitset<DATA_SIZE> data);
 	void sendPositiveResp();
 	void sendNegativeResp();
@@ -25,7 +33,9 @@ public:
 private:
 	Beeper beeper;
 	double oneFreq;
+	double oneZeroFreq;
 	double zeroFreq;
+	double zeroOneFreq;
 };
 
 

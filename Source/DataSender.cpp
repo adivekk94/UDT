@@ -9,38 +9,68 @@
 
 DataSender::DataSender()
 	: oneFreq(17500),
-	  zeroFreq(19000)
+		oneZeroFreq(16800),
+	  zeroFreq(18800),
+		zeroOneFreq(20000)
 {}
 
-void DataSender::sendOneBit(const bool isOne)
+void DataSender::sendTwoBits(const EBitsData twoBits)
 {
-	const double diff = 100;
-	if(oneFreq > 18200)
-	{
-		oneFreq = 17500;
-	}
-	if(zeroFreq > 19800)
-	{
-		zeroFreq = 19000;
-	}
+//	const double diff = 100;
+//	if(oneFreq > 18200)
+//	{
+//		oneFreq = 17500;
+//	}
+//	if(zeroFreq > 19600)
+//	{
+//		zeroFreq = 18800;
+//	}
 
-	if(isOne)
+	switch(twoBits)
 	{
-		beeper.beep(oneFreq, BEEP_DURATION);
-		oneFreq += diff;
-	}
-	else
-	{
-		beeper.beep(zeroFreq, BEEP_DURATION);
-		zeroFreq += diff;
+		case EOneOne:
+			beeper.beep(oneFreq, BEEP_DURATION);
+//			oneFreq += diff;
+//			cout << "11" << endl;
+		break;
+		case EOneZero:
+			beeper.beep(oneZeroFreq, BEEP_DURATION);
+//			cout << "10" << endl;
+		break;
+		case EZeroZero:
+			beeper.beep(zeroFreq, BEEP_DURATION);
+//			cout << "00" << endl;
+//			zeroFreq += diff;
+		break;
+		case EZeroOne:
+			beeper.beep(zeroOneFreq, BEEP_DURATION);
+//			cout << "01" << endl;
+		break;
 	}
 }
 
 void DataSender::sendData(const bitset<DATA_SIZE> data)
 {
-	for(u32 i = 0; i < DATA_SIZE; ++i)
+	EBitsData bitsData;
+	for(u32 i = 0; i < DATA_SIZE; i+=2)
 	{
-		sendOneBit(data[i]);
+		if(data[i] && data[i+1]) //11
+		{
+			bitsData = EOneOne;
+		}
+		else if(data[i] && !data[i+1]) //10
+		{
+			bitsData = EOneZero;
+		}
+		else if(!data[i] && data[i+1]) //01
+		{
+			bitsData = EZeroOne;
+		}
+		else //00
+		{
+			bitsData = EZeroZero;
+		}
+		sendTwoBits(bitsData);
 	}
 }
 

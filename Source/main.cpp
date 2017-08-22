@@ -10,7 +10,7 @@
 #include "aquila/transform/Fft.h"
 #include <cstdlib>
 
-const string WORD_TO_END = "STOPSTOPSTOPSTOP";
+const string WORD_TO_END = "STOP";
 
 void showData(DataBitset& data)
 {
@@ -69,7 +69,7 @@ void showTxMenu()
 				 << "##       enter to send data...    ##" << endl
 				 << "##                                ##" << endl
 				 << "####################################" << endl
-				 << endl << "\tWord: STOP";
+				 << endl << "\tWord: STOP" << endl;
 		cout << flush;
 		//TODO: update to access type word
 }
@@ -115,8 +115,6 @@ int main(int argc, char* argv[])
 	if(mainSystem.isInTxMode()) //TxMode
 	{
 		DataBitset dataToSend;
-		for(u32 j = 0; j < 4; ++j)
-		{
 		for(u32 i = 0; i < 4; ++i)
 		{
 			dataToSend = DataBitset(dataString[i]);
@@ -150,7 +148,6 @@ int main(int argc, char* argv[])
 				}
 			}
 			sf::sleep(sf::milliseconds(timeDelay));
-		}
 		}
 	}
 	else //RxMode
