@@ -32,10 +32,7 @@ public:
 	void getData() const;
 private:
 	Beeper beeper;
-	double oneFreq;
-	double oneZeroFreq;
-	double zeroFreq;
-	double zeroOneFreq;
+	u32 frequencies[4];
 };
 
 

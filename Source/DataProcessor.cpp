@@ -100,39 +100,31 @@ void DataProcessor::processData(const sf::SoundBuffer& data)
 	calculateFoundFrequency();
 	u32 freq = getFoundFrequency();
 //	cout << "Freq = " << freq << ", HighestFftAmplitudePosition = " << highestFftAmplitudePosition << endl;
-	if(freq > 17400 && freq < 17600) //11
+	if(freq > 17600 && freq < 18300) //11
 	{
-		cout << "Rcv 11: " << freq << endl;
-		receivedData[currentBit] = 1;
-		++currentBit;
-		receivedData[currentBit] = 1;
-		++currentBit;
+//		cout << "Rcv 11: " << freq << endl;
+		receivedData[currentBit++] = 1;
+		receivedData[currentBit++] = 1;
 	}
-	else if(freq > 18700 && freq < 18900) //00
+	else if(freq > 18400 && freq < 19100) //00
 	{
-		cout << "Rcv 00: " << freq << endl;
-		receivedData[currentBit] = 0;
-		++currentBit;
-		receivedData[currentBit] = 0;
-		++currentBit;
+//		cout << "Rcv 00: " << freq << endl;
+		receivedData[currentBit++] = 0;
+		receivedData[currentBit++] = 0;
 	}
-	else if(freq > 16700 && freq < 16900) //10
+	else if(freq > 16800 && freq < 17500) //10
 	{
-		cout << "Rcv 10: " << freq << endl;
-		receivedData[currentBit] = 1;
-		++currentBit;
-		receivedData[currentBit] = 0;
-		++currentBit;
+//		cout << "Rcv 10: " << freq << endl;
+		receivedData[currentBit++] = 1;
+		receivedData[currentBit++] = 0;
 	}
-	else if(freq > 19900 && freq < 20100) //01
+	else if(freq > 19200 && freq < 19900) //01
 	{
-		cout << "Rcv 01: " << freq << endl;
-		receivedData[currentBit] = 0;
-		++currentBit;
-		receivedData[currentBit] = 1;
-		++currentBit;
+//		cout << "Rcv 01: " << freq << endl;
+		receivedData[currentBit++] = 0;
+		receivedData[currentBit++] = 1;
 	}
-	else
+	else if(currentBit > 0)
 	{
 		if((DATA_SIZE == currentBit)
 			 || (DATA_SIZE+1 == currentBit))
@@ -160,8 +152,6 @@ void DataProcessor::processData(const sf::SoundBuffer& data)
 //		{
 //			dataRespReceived = true;
 //		}
-		else if(currentBit > 0)
-		{
 //			cout << "InvalidTxReceived, numOfBitsReceived = " << (u32)currentBit;
 //			cout << ", BadData = ";
 //			for(u32 i = 0; i < currentBit; ++i)
@@ -169,8 +159,7 @@ void DataProcessor::processData(const sf::SoundBuffer& data)
 //				cout << receivedData[i];
 //			}
 //			cout << endl;
-			invalidTxReceived = true;
-		}
+		invalidTxReceived = true;
 		currentBit = 0;
 	}
 	resetHighestFftAmplitudePosition();
@@ -295,16 +284,16 @@ bool DataProcessor::isPositiveRespReceived() const
 {
 	if(dataRespReceivedPropably)
 	{
-		if(receivedData[0] && receivedData[1])
+		if(receivedData[0] && receivedData[2])
 		{
 			return true;
 		}
 		return false;
 	}
 
-	if((receivedData[0] && receivedData[1])
-		 || (receivedData[1] && receivedData[2])
-		 || (receivedData[0] && receivedData[2]))
+	if((receivedData[0] && receivedData[2])
+		 || (receivedData[2] && receivedData[4])
+		 || (receivedData[0] && receivedData[4]))
 	{
 		return true;
 	}
@@ -313,7 +302,7 @@ bool DataProcessor::isPositiveRespReceived() const
 
 bool DataProcessor::isPositiveRespReceivedPropably() const
 {
-	if(receivedData[0] && receivedData[1])
+	if(receivedData[0] && receivedData[2])
 	{
 		return true;
 	}

@@ -27,6 +27,11 @@ const u8  RESP_LENGTH = 3;
 const u32 BEEP_DURATION = 100;
 const u8  DATA_SIZE = BYTE + CRC_LENGTH + 1;
 
+const u32 ZERO_ZERO_FREQ = 18600;
+const u32 ZERO_ONE_FREQ = 19400;
+const u32 ONE_ZERO_FREQ = 17000;
+const u32 ONE_ONE_FREQ = 17800;
+
 typedef bitset<CRC_LENGTH> CrcBitset;
 typedef bitset<DATA_SIZE>  DataBitset;
 

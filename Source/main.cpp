@@ -12,6 +12,12 @@
 
 const string WORD_TO_END = "STOP";
 
+//enum ESendRespType
+//{
+//	ENegativeResp,
+//	EPositiveResp
+//};
+
 void showData(DataBitset& data)
 {
     cout << "DATA: " << data << endl;
@@ -86,6 +92,10 @@ void showRxMenu()
 
 int main(int argc, char* argv[])
 {
+//	mainSystem.dataSender.sendTwoBits(EZeroZero);
+//	mainSystem.dataSender.sendTwoBits(EZeroOne);
+//	mainSystem.dataSender.sendTwoBits(EOneOne);
+//	return 0;
 	bool rxStarted = false;
 	showMainMenu();
 	char action = 'n';
@@ -111,15 +121,23 @@ int main(int argc, char* argv[])
 	string dataString[4] = {"000001010011", "000001010100", "000001001111", "000001010000"}; //STOP
 	string word = "";
 	const u32 timeDelay = 100;
+
+//	bool startTimer = false;
+//	u32 timer = 0;
+//	ESendRespType sendRespType;
+
 	bool dataReceivedCorrectly = true;
 	if(mainSystem.isInTxMode()) //TxMode
 	{
 		DataBitset dataToSend;
+//		for(u32 j = 0; j < 4; ++j)
+//		{
 		for(u32 i = 0; i < 4; ++i)
 		{
 			dataToSend = DataBitset(dataString[i]);
 			prepareDataToSend(dataToSend);
 //			cout << "Bitset: " << dataToSend << endl;
+			cout << "Sending data: " << dataToSend << endl;
 			mainSystem.dataSender.sendData(dataToSend);
 			sf::SoundBuffer data2;
 			while(true)
@@ -135,7 +153,7 @@ int main(int argc, char* argv[])
 					{
 //						cout << "Data send incorrectly. Retransmission needed." << endl;
 						dataReceivedCorrectly = false;
-						sf::sleep(sf::milliseconds(timeDelay));
+//						sf::sleep(sf::milliseconds(timeDelay));
 						mainSystem.dataSender.sendData(dataToSend);
 						sf::sleep(sf::milliseconds(timeDelay));
 					}
@@ -146,9 +164,11 @@ int main(int argc, char* argv[])
 						break;
 					}
 				}
+				cout << "Waiting for response" << endl;
 			}
 			sf::sleep(sf::milliseconds(timeDelay));
 		}
+//		}
 	}
 	else //RxMode
 	{
@@ -162,6 +182,8 @@ int main(int argc, char* argv[])
 			DataBitset receivedData;
 			if(mainSystem.dataProcessor.isCorrectDataSizeReceived())
 			{
+//				startTimer = false;
+//				timer = 0;
 				if(!rxStarted)
 				{
 					cout << "\tData receiving started..." << endl << endl;
@@ -180,6 +202,8 @@ int main(int argc, char* argv[])
 					mainSystem.dataSender.sendPositiveResp();
 					sf::sleep(sf::milliseconds(timeDelay));
 					cout.flush();
+//					startTimer = true;
+//					sendRespType = EPositiveResp;
 				}
 				else
 				{
@@ -187,16 +211,39 @@ int main(int argc, char* argv[])
 					sf::sleep(sf::milliseconds(timeDelay/2));
 					mainSystem.dataSender.sendNegativeResp();
 					sf::sleep(sf::milliseconds(timeDelay));
+//					startTimer = true;
+//					sendRespType = ENegativeResp;
 				}
 				mainSystem.dataProcessor.setCorrectDataSizeReceived(false);
 			}
 			else if(mainSystem.dataProcessor.isInvalidTxReceived())
 			{
+//				startTimer = false;
+//				timer = 0;
 				sf::sleep(sf::milliseconds(timeDelay/2));
 				mainSystem.dataSender.sendNegativeResp();
 				mainSystem.dataProcessor.setInvalidTxReceived(false);
 				sf::sleep(sf::milliseconds(timeDelay));
 			}
+//			else if(startTimer)
+//			{
+//				cout << "TIMER: " << timer << endl;
+//				timer++;
+////				sf::sleep(sf::milliseconds(1));
+//				if(timer > 2000)
+//				{
+//					if(EPositiveResp == sendRespType)
+//					{
+//						mainSystem.dataSender.sendPositiveResp();
+//					}
+//					else
+//					{
+//						mainSystem.dataSender.sendNegativeResp();
+//					}
+//					timer = 0;
+//				}
+//
+//			}
 			if(WORD_TO_END == word)
 			{
 				cout << endl;
