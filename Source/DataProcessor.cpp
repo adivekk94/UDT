@@ -88,7 +88,8 @@ void DataProcessor::convertDataToArray(const u64 			  samplesAmount,
 	}
 }
 
-void DataProcessor::processData(const sf::SoundBuffer& data)
+void DataProcessor::processData(const sf::SoundBuffer& data,
+																const bool 						 expectResp)
 {
 	const u64 samplesAmount = data.getSampleCount();
 	double convertedData[samplesAmount];
@@ -100,43 +101,77 @@ void DataProcessor::processData(const sf::SoundBuffer& data)
 	calculateFoundFrequency();
 	u32 freq = getFoundFrequency();
 //	cout << "Freq = " << freq << ", HighestFftAmplitudePosition = " << highestFftAmplitudePosition << endl;
-	if(freq > 17600 && freq < 18300) //11
+	if(freq > 19600 && freq < 20000) //111
 	{
-//		cout << "Rcv 11: " << freq << endl;
+//		cout << "Rcv 111: " << freq << endl;
+		receivedData[currentBit++] = 1;
 		receivedData[currentBit++] = 1;
 		receivedData[currentBit++] = 1;
 	}
-	else if(freq > 18400 && freq < 19100) //00
+	else if(freq > 16800 && freq < 17200) //000
 	{
-//		cout << "Rcv 00: " << freq << endl;
+//		cout << "Rcv 000: " << freq << endl;
+		receivedData[currentBit++] = 0;
 		receivedData[currentBit++] = 0;
 		receivedData[currentBit++] = 0;
 	}
-	else if(freq > 16800 && freq < 17500) //10
+	else if(freq > 18800 && freq < 19200) //101
 	{
-//		cout << "Rcv 10: " << freq << endl;
+//		cout << "Rcv 101: " << freq << endl;
+		receivedData[currentBit++] = 1;
+		receivedData[currentBit++] = 0;
+		receivedData[currentBit++] = 1;
+	}
+	else if(freq > 17600 && freq < 18000) //010
+	{
+//		cout << "Rcv 010: " << freq << endl;
+		receivedData[currentBit++] = 0;
 		receivedData[currentBit++] = 1;
 		receivedData[currentBit++] = 0;
 	}
-	else if(freq > 19200 && freq < 19900) //01
+	else if(freq > 19200 && freq < 19600) //110
 	{
-//		cout << "Rcv 01: " << freq << endl;
+//		cout << "Rcv 110: " << freq << endl;
+		receivedData[currentBit++] = 1;
+		receivedData[currentBit++] = 1;
+		receivedData[currentBit++] = 0;
+	}
+	else if(freq > 17200 && freq < 17600) //001
+	{
+//		cout << "Rcv 001: " << freq << endl;
+		receivedData[currentBit++] = 0;
 		receivedData[currentBit++] = 0;
 		receivedData[currentBit++] = 1;
+	}
+	else if(freq > 18000 && freq < 18400) //011
+	{
+//		cout << "Rcv 011: " << freq << endl;
+		receivedData[currentBit++] = 0;
+		receivedData[currentBit++] = 1;
+		receivedData[currentBit++] = 1;
+	}
+	else if(freq > 18400 && freq < 18800) //100
+	{
+//		cout << "Rcv 100: " << freq << endl;
+		receivedData[currentBit++] = 1;
+		receivedData[currentBit++] = 0;
+		receivedData[currentBit++] = 0;
 	}
 	else if(currentBit > 0)
 	{
-		if((DATA_SIZE == currentBit)
-			 || (DATA_SIZE+1 == currentBit))
+//		cout << "Current bit: " << (u32)currentBit << endl;
+		if(!expectResp &&
+			 ((DATA_SIZE == currentBit)
+			 || (DATA_SIZE+3 == currentBit)))
 		{
 			correctDataSizeReceived = true;
 		}
-		else if(((2*RESP_LENGTH) == currentBit)
-				    || (2*(RESP_LENGTH+1)) == currentBit)
+		else if(((3*RESP_LENGTH) == currentBit)
+				    || (3*(RESP_LENGTH+1)) == currentBit)
 		{
 			dataRespReceived = true;
 		}
-		else if((2*(RESP_LENGTH-1)) == currentBit)
+		else if((3*(RESP_LENGTH-1)) == currentBit)
 		{
 			dataRespReceivedPropably = true;
 		}
@@ -284,16 +319,16 @@ bool DataProcessor::isPositiveRespReceived() const
 {
 	if(dataRespReceivedPropably)
 	{
-		if(receivedData[0] && receivedData[2])
+		if(receivedData[0] && receivedData[3])
 		{
 			return true;
 		}
 		return false;
 	}
 
-	if((receivedData[0] && receivedData[2])
-		 || (receivedData[2] && receivedData[4])
-		 || (receivedData[0] && receivedData[4]))
+	if((receivedData[0] && receivedData[3])
+		 || (receivedData[3] && receivedData[6])
+		 || (receivedData[0] && receivedData[6]))
 	{
 		return true;
 	}
@@ -302,7 +337,7 @@ bool DataProcessor::isPositiveRespReceived() const
 
 bool DataProcessor::isPositiveRespReceivedPropably() const
 {
-	if(receivedData[0] && receivedData[2])
+	if(receivedData[0] && receivedData[3])
 	{
 		return true;
 	}

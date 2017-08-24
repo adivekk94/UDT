@@ -145,7 +145,7 @@ int main(int argc, char* argv[])
 				dataReceivedCorrectly = true;
 				mainSystem.dataReceiver.receiveData(1000);
 				data2 = mainSystem.dataReceiver.getReceivedData();
-				mainSystem.dataProcessor.processData(data2);
+				mainSystem.dataProcessor.processData(data2, true);
 				if(mainSystem.dataProcessor.isDataRespReceived()
 					 || mainSystem.dataProcessor.isDataRespReceivedPropably())
 				{
@@ -164,9 +164,9 @@ int main(int argc, char* argv[])
 						break;
 					}
 				}
-				cout << "Waiting for response" << endl;
+//				cout << "Waiting for response" << endl;
 			}
-			sf::sleep(sf::milliseconds(timeDelay));
+			sf::sleep(sf::milliseconds(timeDelay*4));
 		}
 //		}
 	}
@@ -195,7 +195,7 @@ int main(int argc, char* argv[])
 				if(mainSystem.dataProcessor.isParityCorrect(receivedData)
 					 && crc.isByteCorrect(receivedData))
 				{
-//					cout << "CORRECT RECEIVED ";
+//					cout << " CORRECT RECEIVED ";
 					showDataByte(receivedData);
 					word += static_cast<char>(receivedData.to_ulong());
 					sf::sleep(sf::milliseconds(timeDelay/2));

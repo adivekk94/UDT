@@ -19,7 +19,8 @@ class DataProcessor
 {
 public:
 	DataProcessor();
-	void processData(const sf::SoundBuffer& data);
+	void processData(const sf::SoundBuffer& data,
+									 const bool expectResp = false);
 	bool getCalculatedParityBit(const DataBitset& data, const bool forCalc = true);
 	bool isParityCorrect(const DataBitset& data);
 	void calculateFoundFrequency();

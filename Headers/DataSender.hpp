@@ -14,10 +14,14 @@
 
 enum EBitsData
 {
-	EZeroZero,
-	EZeroOne,
-	EOneZero,
-	EOneOne
+	E3xZero,
+	E2xZeroOne,
+	EZero2xOne,
+	E3xOne,
+	EOne2xZero,
+	E2xOneZero,
+	EOneZeroOne,
+	EZeroOneZero
 };
 
 class DataSender
@@ -25,6 +29,7 @@ class DataSender
 public:
 	DataSender();
 	void sendTwoBits(const EBitsData twoBits);
+	void sendFourBits(const EBitsData fourBits);
 	void sendData(const bitset<DATA_SIZE> data);
 	void sendPositiveResp();
 	void sendNegativeResp();
@@ -32,7 +37,7 @@ public:
 	void getData() const;
 private:
 	Beeper beeper;
-	u32 frequencies[4];
+	u32 frequencies[8];
 };
 
 
