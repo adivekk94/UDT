@@ -10,7 +10,7 @@
 #include "aquila/transform/Fft.h"
 #include <cstdlib>
 
-const string WORD_TO_END = "STOP";
+const string WORD_TO_END = "Hello";
 
 //enum ESendRespType
 //{
@@ -75,7 +75,7 @@ void showTxMenu()
 				 << "##       enter to send data...    ##" << endl
 				 << "##                                ##" << endl
 				 << "####################################" << endl
-				 << endl << "\tWord: STOP" << endl;
+				 << endl << "\tWord: Hello" << endl;
 		cout << flush;
 		//TODO: update to access type word
 }
@@ -117,10 +117,11 @@ int main(int argc, char* argv[])
 
 //	string dataString[4] = {"000001110101", "000010011001", "000010000011", "000010110100"};
 //	string dataString[5] = {"000001001101", "000001101001", "000001110011", "000001101001", "000001100001"}; //Misia
-//	string dataString[5] = {"000001001000", "000001100101", "000001101100", "000001101100", "000001101111"}; //Hello
-	string dataString[4] = {"000001010011", "000001010100", "000001001111", "000001010000"}; //STOP
+	string dataString[5] = {"000001001000", "000001100101", "000001101100", "000001101100", "000001101111"}; //Hello
+//	string dataString[4] = {"000001010011", "000001010100", "000001001111", "000001010000"}; //STOP
 	string word = "";
-	const u32 timeDelay = 100;
+	string sendingWord = "Hello";
+	const u32 timeDelay = 10;
 
 //	bool startTimer = false;
 //	u32 timer = 0;
@@ -132,13 +133,14 @@ int main(int argc, char* argv[])
 		DataBitset dataToSend;
 //		for(u32 j = 0; j < 4; ++j)
 //		{
-		for(u32 i = 0; i < 4; ++i)
+		for(u32 i = 0; i < 5; ++i)
 		{
 			dataToSend = DataBitset(dataString[i]);
 			prepareDataToSend(dataToSend);
 //			cout << "Bitset: " << dataToSend << endl;
-			cout << "Sending data: " << dataToSend << endl;
+			cout << "Sending data: " << dataToSend << " - " << sendingWord[i] << endl;
 			mainSystem.dataSender.sendData(dataToSend);
+			sf::sleep(sf::milliseconds(timeDelay*4));
 			sf::SoundBuffer data2;
 			while(true)
 			{
@@ -155,7 +157,7 @@ int main(int argc, char* argv[])
 						dataReceivedCorrectly = false;
 //						sf::sleep(sf::milliseconds(timeDelay));
 						mainSystem.dataSender.sendData(dataToSend);
-						sf::sleep(sf::milliseconds(timeDelay));
+						sf::sleep(sf::milliseconds(timeDelay*4));
 					}
 					mainSystem.dataProcessor.setDataRespReceived(false);
 					mainSystem.dataProcessor.setDataRespReceivedPropably(false);
@@ -164,10 +166,16 @@ int main(int argc, char* argv[])
 						break;
 					}
 				}
+//				else if(mainSystem.dataProcessor.isInvalidTxReceived())
+//				{
+//					cout << "Invalid Tx" << endl;
+//					mainSystem.dataProcessor.setInvalidTxReceived(false);
+//				}
 //				cout << "Waiting for response" << endl;
 			}
 			sf::sleep(sf::milliseconds(timeDelay*4));
 		}
+		cout << "Data has been sent." << endl;
 //		}
 	}
 	else //RxMode
@@ -195,12 +203,12 @@ int main(int argc, char* argv[])
 				if(mainSystem.dataProcessor.isParityCorrect(receivedData)
 					 && crc.isByteCorrect(receivedData))
 				{
-//					cout << " CORRECT RECEIVED ";
+//					cout << " CORRECT RECEIVED " << endl;
 					showDataByte(receivedData);
 					word += static_cast<char>(receivedData.to_ulong());
-					sf::sleep(sf::milliseconds(timeDelay/2));
-					mainSystem.dataSender.sendPositiveResp();
 					sf::sleep(sf::milliseconds(timeDelay));
+					mainSystem.dataSender.sendPositiveResp();
+					sf::sleep(sf::milliseconds(timeDelay*8));
 					cout.flush();
 //					startTimer = true;
 //					sendRespType = EPositiveResp;
@@ -208,9 +216,9 @@ int main(int argc, char* argv[])
 				else
 				{
 //					cout << "INCORRECT RECEIVED BYTE" << endl;
-					sf::sleep(sf::milliseconds(timeDelay/2));
-					mainSystem.dataSender.sendNegativeResp();
 					sf::sleep(sf::milliseconds(timeDelay));
+					mainSystem.dataSender.sendNegativeResp();
+					sf::sleep(sf::milliseconds(timeDelay*8));
 //					startTimer = true;
 //					sendRespType = ENegativeResp;
 				}
@@ -220,10 +228,11 @@ int main(int argc, char* argv[])
 			{
 //				startTimer = false;
 //				timer = 0;
-				sf::sleep(sf::milliseconds(timeDelay/2));
+//				cout << "Invalid Tx" << endl;
+				sf::sleep(sf::milliseconds(timeDelay));
 				mainSystem.dataSender.sendNegativeResp();
 				mainSystem.dataProcessor.setInvalidTxReceived(false);
-				sf::sleep(sf::milliseconds(timeDelay));
+				sf::sleep(sf::milliseconds(timeDelay*8));
 			}
 //			else if(startTimer)
 //			{
@@ -246,11 +255,9 @@ int main(int argc, char* argv[])
 //			}
 			if(WORD_TO_END == word)
 			{
-				cout << endl;
+				cout << endl << "\tData has been received." << endl;
 				break;
 			}
 		}
 	}
-
-	cout << endl << "End of program." << endl;
 }

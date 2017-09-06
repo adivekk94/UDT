@@ -12,9 +12,9 @@ DataSender::DataSender()
 								 F100, F101, F110, F111 }
 {}
 
-void DataSender::sendFourBits(const EBitsData fourBits)
+void DataSender::sendThreeBits(const EBitsData threeBits)
 {
-	switch(fourBits)
+	switch(threeBits)
 	{
 		case E3xZero:
 			beeper.beep(frequencies[0], BEEP_DURATION);
@@ -49,48 +49,6 @@ void DataSender::sendFourBits(const EBitsData fourBits)
 //			cout << "010" << endl;
 		break;
 	}
-}
-
-void DataSender::sendTwoBits(const EBitsData twoBits)
-{
-//	const u32 FREQ_DIFF = 100;
-//	u32 index11 = 0, index00 = 0, index10 = 0, index01 = 0;
-//	const u32 frequencies11[5] = {frequencies[3], frequencies[3]+FREQ_DIFF, frequencies[3]+2*FREQ_DIFF, frequencies[3]+3*FREQ_DIFF, frequencies[3]+4*FREQ_DIFF};
-//	const u32 frequencies10[5] = {frequencies[2], frequencies[2]+FREQ_DIFF, frequencies[2]+2*FREQ_DIFF, frequencies[2]+3*FREQ_DIFF, frequencies[2]+4*FREQ_DIFF};
-//	const u32 frequencies00[5] = {frequencies[0], frequencies[0]+FREQ_DIFF, frequencies[0]+2*FREQ_DIFF, frequencies[0]+3*FREQ_DIFF, frequencies[0]+4*FREQ_DIFF};
-//	const u32 frequencies01[5] = {frequencies[1], frequencies[1]+FREQ_DIFF, frequencies[1]+2*FREQ_DIFF, frequencies[1]+3*FREQ_DIFF, frequencies[1]+4*FREQ_DIFF};
-
-//	switch(twoBits)
-//	{
-//		case EOneOne:
-//			beeper.beep(frequencies[3], BEEP_DURATION);
-////			beeper.beep(frequencies11[index11++], BEEP_DURATION);
-////			if(index11 == 4)
-////				index11 = 0;
-////			cout << "11" << endl;
-//		break;
-//		case EOneZero:
-//			beeper.beep(frequencies[2], BEEP_DURATION);
-////			beeper.beep(frequencies10[index10++], BEEP_DURATION);
-////			if(index10 == 4)
-////				index10 = 0;
-////			cout << "10" << endl;
-//		break;
-//		case EZeroZero:
-//			beeper.beep(frequencies[0], BEEP_DURATION);
-////			beeper.beep(frequencies00[index00++], BEEP_DURATION);
-////			if(index00 == 4)
-////				index00 = 0;
-////			cout << "00" << endl;
-//		break;
-//		case EZeroOne:
-//			beeper.beep(frequencies[1], BEEP_DURATION);
-////			beeper.beep(frequencies01[index01++], BEEP_DURATION);
-////			if(index01 == 4)
-////				index01 = 0;
-////			cout << "01" << endl;
-//		break;
-//	}
 }
 
 void DataSender::sendData(const bitset<DATA_SIZE> data)
@@ -130,7 +88,7 @@ void DataSender::sendData(const bitset<DATA_SIZE> data)
 		{
 			bitsData = EZeroOneZero;
 		}
-		sendFourBits(bitsData);
+		sendThreeBits(bitsData);
 	}
 }
 

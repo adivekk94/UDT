@@ -19,7 +19,7 @@ typedef long long 				 i64;
 
 const u32 AMPLITUDE = 1024;
 const u32 SAMPLE_FREQ = 44100;
-const u32 WINDOW_SIZE = 1024;
+const u32 WINDOW_SIZE = 2048;
 const u8  BYTE = 8;
 const u8  CRC_DIVIDER_LENGTH = 4;
 const u8  CRC_LENGTH = 3;
@@ -36,7 +36,14 @@ const u32 F101 = 19000;
 const u32 F110 = 19400;
 const u32 F111 = 19800;
 
-const u32 FOFFSET = 300;
+const u32 FREQ_OFFSET_1 = 200;
+const u32 FREQ_OFFSET_2 = 600;
+const u32 FREQ_OFFSET_3 = 1000;
+const u32 FREQ_OFFSET_4 = 1400;
+const u32 FREQ_OFFSET_5 = 1800;
+const u32 FREQ_OFFSET_6 = 2200;
+const u32 FREQ_OFFSET_7 = 2600;
+const u32 FREQ_OFFSET_8 = 3000;
 
 typedef bitset<CRC_LENGTH> CrcBitset;
 typedef bitset<DATA_SIZE>  DataBitset;

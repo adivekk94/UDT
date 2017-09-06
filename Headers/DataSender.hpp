@@ -28,8 +28,7 @@ class DataSender
 {
 public:
 	DataSender();
-	void sendTwoBits(const EBitsData twoBits);
-	void sendFourBits(const EBitsData fourBits);
+	void sendThreeBits(const EBitsData threeBits);
 	void sendData(const bitset<DATA_SIZE> data);
 	void sendPositiveResp();
 	void sendNegativeResp();
