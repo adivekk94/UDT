@@ -44,7 +44,7 @@ all: UDT
 UDT: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C++ Linker'
-	g++ -L/home/adivek/Licencjat/Libs -o "UDT" $(OBJS) $(USER_OBJS) $(LIBS)
+	g++ -L/path/to/libs/folder -o "UDT" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
