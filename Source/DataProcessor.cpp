@@ -6,7 +6,6 @@
  */
 
 #include "../Headers/DataProcessor.hpp"
-#include "aquila/source/generator/SineGenerator.h"
 
 DataProcessor::DataProcessor()
 	: highestFftAmplitudePosition(0),
@@ -107,7 +106,6 @@ void DataProcessor::processData(const sf::SoundBuffer& data,
 		}
 		else if(freqDiff < FREQ_OFFSET_3) //010
 		{
-//			cout << "Rcv 010: " << freq << endl;
 			receivedData[currentBit++] = 0;
 			receivedData[currentBit++] = 1;
 			receivedData[currentBit++] = 0;

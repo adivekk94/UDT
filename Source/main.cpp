@@ -6,8 +6,6 @@
  */
 
 #include "../Headers/main.hpp"
-#include "aquila/tools/TextPlot.h"
-#include "aquila/transform/Fft.h"
 #include <cstdlib>
 
 const string WORD_TO_END = "STOP";
