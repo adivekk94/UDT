@@ -14,11 +14,6 @@ const string WORD_TO_END = "STOP";
 
 string sendingWord = "";
 
-void showData(DataBitset& data)
-{
-    cout << "DATA: " << data << endl;
-}
-
 void showDataByte(const DataBitset& data)
 {
     cout << static_cast<char>(data.to_ulong());

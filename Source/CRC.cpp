@@ -13,7 +13,6 @@ void CRC::calculateCRC(DataBitset data)
 	const bitset<CRC_DIVIDER_LENGTH> crcDivider("1101");
 	u32 diff = numOfBits-CRC_DIVIDER_LENGTH, currentPos = 0;
 	u32 maxPosition = numOfBits-CRC_DIVIDER_LENGTH;
-//	cout << "Extracted CRC: " << data[8] << data[9] << data[10] << endl;
 	while(diff > 0)
 	{
 		for(u32 i = currentPos; i <= maxPosition; ++i)
