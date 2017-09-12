@@ -48,7 +48,7 @@ const u32 FREQ_OFFSET_8 = 3000;
 typedef bitset<CRC_LENGTH> CrcBitset;
 typedef bitset<DATA_SIZE>  DataBitset;
 
-
+const u32 AMP_THRESHOLD = 1000000;
 
 enum EMode
 {

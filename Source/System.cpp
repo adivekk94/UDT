@@ -33,7 +33,7 @@ void System::setRxMode()
 
 void System::operator=(const System& sys)
 {
-    mode = sys.mode;
+  mode = sys.mode;
 }
 
 

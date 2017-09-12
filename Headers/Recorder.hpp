@@ -17,9 +17,6 @@ class Recorder : public sf::SoundBufferRecorder
 public:
 	Recorder();
 	void recordData(const u32 delay);
-	void testRecordedSound();
-private:
-//	sf::SoundBuffer buffer;
 };
 
 #endif /* HEADERS_RECORDER_HPP_ */

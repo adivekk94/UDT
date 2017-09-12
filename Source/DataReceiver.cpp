@@ -19,8 +19,3 @@ const sf::SoundBuffer DataReceiver::getReceivedData() const
 {
 	return recorder.getBuffer();
 }
-
-void DataReceiver::testRecordedSound()
-{
-	recorder.testRecordedSound();
-}

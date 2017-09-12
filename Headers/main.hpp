@@ -10,7 +10,6 @@
 
 #include "../Headers/System.hpp"
 #include "Beeper.hpp"
-#include "StarWars.hpp"
 
 static System mainSystem;
 CRC crc;

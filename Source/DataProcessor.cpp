@@ -11,21 +11,12 @@
 DataProcessor::DataProcessor()
 	: highestFftAmplitudePosition(0),
 	  foundFrequency(0),
-	  dataStr(),
 		correctDataSizeReceived(false),
 	  currentBit(0),
-		dataReceived(false),
-		invalidTxReceived(false),
-		crcReceived(false),
-		crcRespReceived(false),
-		crcExpected(false),
-		crcRespExpected(false),
-		dataExpected(false),
-		dataRespExpected(false),
 		dataRespReceived(false),
-		dataRespReceivedPropably(false)
-{
-}
+		dataRespReceivedPropably(false),
+		invalidTxReceived(false)
+{}
 
 void DataProcessor::calculateFoundFrequency()
 {
@@ -186,32 +177,8 @@ void DataProcessor::processData(const sf::SoundBuffer& data,
 		}
 
 		currentBit = 0;
-//		else if((2*CRC_LENGTH == currentBit) && crcExpected)
-//		{
-//			crcReceived = true;
-//		}
-//		else if((RESP_LENGTH == currentBit) && crcRespExpected)
-//		{
-//			crcRespReceived = true;
-//		}
-//		else if((RESP_LENGTH == currentBit) && dataRespExpected)
-//		{
-//			dataRespReceived = true;
-//		}
-//			cout << "InvalidTxReceived, numOfBitsReceived = " << (u32)currentBit;
-//			cout << ", BadData = ";
-//			for(u32 i = 0; i < currentBit; ++i)
-//			{
-//				cout << receivedData[i];
-//			}
-//			cout << endl;
 	}
 	resetHighestFftAmplitudePosition();
-}
-
-string DataProcessor::getDataStr() const
-{
-	return dataStr;
 }
 
 bool DataProcessor::isDataRespReceived() const
@@ -224,39 +191,9 @@ bool DataProcessor::isDataRespReceivedPropably() const
 	return dataRespReceivedPropably;
 }
 
-bool DataProcessor::isByteReceived() const
-{
-	return dataReceived;
-}
-
-bool DataProcessor::isCrcRespReceived() const
-{
-	return crcRespReceived;
-}
-
-bool DataProcessor::isCrcReceived() const
-{
-	return crcReceived;
-}
-
 bool DataProcessor::isInvalidTxReceived() const
 {
 	return invalidTxReceived;
-}
-
-void DataProcessor::setCrcReceived(const bool state)
-{
-	crcReceived = state;
-}
-
-void DataProcessor::setCrcRespReceived(const bool state)
-{
-	crcRespReceived = state;
-}
-
-void DataProcessor::setDataReceived(const bool state)
-{
-	dataReceived = state;
 }
 
 void DataProcessor::setDataRespReceived(const bool state)
@@ -279,51 +216,6 @@ DataBitset DataProcessor::getReceivedData() const
 	return receivedData;
 }
 
-void DataProcessor::activateCrcExpected()
-{
-	crcExpected = true;
-}
-
-void DataProcessor::deactivateCrcExpected()
-{
-	crcExpected = false;
-}
-
-void DataProcessor::activateCrcRespExpected()
-{
-	crcRespExpected = true;
-}
-
-void DataProcessor::deactivateCrcRespExpected()
-{
-	crcRespExpected = false;
-}
-
-void DataProcessor::activateDataExpected()
-{
-	dataExpected = true;
-}
-
-void DataProcessor::deactivateDataExpected()
-{
-	dataExpected = false;
-}
-
-void DataProcessor::activateDataRespExpected()
-{
-	dataRespExpected = true;
-}
-
-void DataProcessor::deactivateDataRespExpected()
-{
-	dataRespExpected = false;
-}
-
-bool DataProcessor::isCrcRespExpectedActive() const
-{
-	return crcRespExpected;
-}
-
 bool DataProcessor::isPositiveRespReceived() const
 {
 	if(dataRespReceivedPropably)
@@ -338,15 +230,6 @@ bool DataProcessor::isPositiveRespReceived() const
 	if((receivedData[0] && receivedData[3])
 		 || (receivedData[3] && receivedData[6])
 		 || (receivedData[0] && receivedData[6]))
-	{
-		return true;
-	}
-	return false;
-}
-
-bool DataProcessor::isPositiveRespReceivedPropably() const
-{
-	if(receivedData[0] && receivedData[3])
 	{
 		return true;
 	}

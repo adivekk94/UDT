@@ -13,6 +13,7 @@
 #include <cstring>
 #include <SFML/Audio.hpp>
 #include <bitset>
+#include <vector>
 
 using namespace std;
 

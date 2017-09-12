@@ -20,7 +20,7 @@ class Beeper
 public:
 	Beeper();
 	void beep(const Aquila::FrequencyType freq,
-			  const u32 				  duration);
+			  		const u32 				  				duration);
 
 private:
 	const Aquila::FrequencyType sampleFrequency;

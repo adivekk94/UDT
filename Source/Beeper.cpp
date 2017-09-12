@@ -15,7 +15,7 @@ Beeper::Beeper()
 }
 
 void Beeper::beep(const Aquila::FrequencyType freq,
-				  				const u32 				  duration) //in ms
+				  				const u32 				  				duration) //in ms
 {
 	const u32 numSamples = sampleFrequency * duration / 1000;
 	sinGen.setFrequency(freq).generate(numSamples);

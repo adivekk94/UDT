@@ -18,9 +18,8 @@ public:
 	DataReceiver();
 	void receiveData(const u32 recLen);
 	const sf::SoundBuffer getReceivedData() const;
-	void testRecordedSound();
 private:
-	Recorder 		  recorder;
+	Recorder recorder;
 };
 
 #endif /* HEADERS_DATARECEIVER_HPP_ */

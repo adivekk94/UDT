@@ -12,28 +12,14 @@
 #include "../Definitions/glo_inc.hpp"
 #include "Beeper.hpp"
 
-enum EBitsData
-{
-	E3xZero,
-	E2xZeroOne,
-	EZero2xOne,
-	E3xOne,
-	EOne2xZero,
-	E2xOneZero,
-	EOneZeroOne,
-	EZeroOneZero
-};
-
 class DataSender
 {
 public:
 	DataSender();
-	void sendThreeBits(const EBitsData threeBits);
+	void sendThreeBits(const u32 threeBits);
 	void sendData(const bitset<DATA_SIZE> data);
 	void sendPositiveResp();
 	void sendNegativeResp();
-	void setDataToSend(const u32 frequency, const u32 duration);
-	void getData() const;
 private:
 	Beeper beeper;
 	u32 frequencies[8];
