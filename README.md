@@ -1,2 +1,3 @@
-# UDT
-Sending data by ultrasounds
+### UDT - Ultrasound Data Transceiver ###
+
+Sends and receives data by ultrasounds.
